@@ -8,7 +8,29 @@ export class CharactersService {
   repository: Character[];
 
   constructor() {
-    this.repository = [];
+    this.repository = [
+      {
+        id: '1',
+        name: 'Harry Potter',
+        age: 10,
+        house: 'Gryffindor',
+        alive: true,
+      },
+      {
+        id: '2',
+        name: 'Ron Weasley',
+        age: 10,
+        house: 'Gryffindor',
+        alive: true,
+      },
+      {
+        id: '3',
+        name: 'Draco Malfoy',
+        age: 10,
+        house: 'Slytherin',
+        alive: true,
+      },
+    ];
   }
 
   //Listar todos los personajes
