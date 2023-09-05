@@ -2,12 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { Character } from './entities/Character.entity';
 import { createCharacterDto } from './dtos/create-caracters.dto';
 import { v4 } from 'uuid';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm/repository/Repository';
 
 @Injectable()
 export class CharactersService {
   repository: Character[];
 
-  constructor() {
+  constructor(
+    @InjectRepository(Character)
+    private characterRepository: Repository<Character>,
+  ) {
     this.repository = [
       {
         id: '1',
