@@ -8,7 +8,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { CharactersService } from './Character.service';
-import { Character } from './entities/Character.entity';
 import { CreateCharacterDto } from './dtos/create-caracters.dto';
 
 @Controller('api/characters')
@@ -24,8 +23,8 @@ export class CharactersController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: string): Promise<Character> {
-    const character: Character = await this.characterService.findById(id);
+  async findById(@Param('id') id: string) {
+    const character = await this.characterService.findById(id);
     return character;
   }
 

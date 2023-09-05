@@ -1,7 +1,7 @@
 import { Character } from './entities/Character.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
-import { /* HttpException, HttpStatus, */ Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCharacterDto } from './dtos/create-caracters.dto';
 
 @Injectable()
@@ -20,14 +20,40 @@ export class CharactersService {
   }
 
   //Obtener un pj por ID
-  async findById(id: string): Promise<Character> {
-    return this.repository.find((char) => char.id === id);
+  async findById(id: string) {
+    const characterFound = await this.characterRepository.find({
+      where: {
+        id,
+      },
+    });
+
+    if (!characterFound) {
+      return new HttpException('Arrendatario not found', HttpStatus.NOT_FOUND);
+    }
+
+    return characterFound;
   }
+  // async findById(id: string): Promise<Character> {
+  //   return this.repository.find((char) => char.id === id);
+  // }
 
   //Obtener todos los pj por casa
-  async findByHouse(house: string): Promise<Character[]> {
-    return this.repository.filter((char) => char.house === house);
+  async findByHouse(house: string) {
+    const characterFound = await this.characterRepository.find({
+      where: {
+        house,
+      },
+    });
+
+    if (!characterFound.length || characterFound instanceof HttpException) {
+      return new HttpException('Character not found', HttpStatus.NOT_FOUND);
+    }
+
+    return characterFound;
   }
+  // async findByHouse(house: string): Promise<Character[]> {
+  //   return this.repository.filter((char) => char.house === house);
+  // }
 
   //Crear un pj nuevo
   async create(createCharacterDto: CreateCharacterDto) {
