@@ -1,9 +1,8 @@
-import { Injectable } from '@nestjs/common';
 import { Character } from './entities/Character.entity';
-import { createCharacterDto } from './dtos/create-caracters.dto';
-import { v4 } from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
+import { /* HttpException, HttpStatus, */ Injectable } from '@nestjs/common';
+import { CreateCharacterDto } from './dtos/create-caracters.dto';
 
 @Injectable()
 export class CharactersService {
@@ -12,35 +11,12 @@ export class CharactersService {
   constructor(
     @InjectRepository(Character)
     private characterRepository: Repository<Character>,
-  ) {
-    this.repository = [
-      {
-        id: '1',
-        name: 'Harry Potter',
-        age: 10,
-        house: 'Gryffindor',
-        alive: true,
-      },
-      {
-        id: '2',
-        name: 'Ron Weasley',
-        age: 10,
-        house: 'Gryffindor',
-        alive: true,
-      },
-      {
-        id: '3',
-        name: 'Draco Malfoy',
-        age: 10,
-        house: 'Slytherin',
-        alive: true,
-      },
-    ];
-  }
+  ) {}
 
   //Listar todos los personajes
-  async findAll(): Promise<Character[]> {
-    return this.repository;
+
+  async findAll() {
+    return await this.characterRepository.find();
   }
 
   //Obtener un pj por ID
@@ -54,18 +30,32 @@ export class CharactersService {
   }
 
   //Crear un pj nuevo
-  async create(createCharacterDto: createCharacterDto) {
-    const { name, alive, house, age } = createCharacterDto;
-    const newCharacter: Character = {
-      id: v4(),
-      name,
-      alive,
-      house,
-      age,
-    };
-    this.repository.push(newCharacter);
-    return newCharacter;
+  async create(createCharacterDto: CreateCharacterDto) {
+    // const arrFound = await this.characterRepository.find({
+    //   where: {
+    //     document: createArrendatarioDto.document,
+    //   },
+    // });
+
+    // if (arrFound.length) {
+    //   return new HttpException('Document already exists', HttpStatus.CONFLICT);
+    // }
+
+    const newCharacter = this.characterRepository.create(createCharacterDto);
+    return await this.characterRepository.save(newCharacter);
   }
+  // async create(createCharacterDto: createCharacterDto) {
+  //   const { name, alive, house, age } = createCharacterDto;
+  //   const newCharacter: Character = {
+  //     id: v4(),
+  //     name,
+  //     alive,
+  //     house,
+  //     age,
+  //   };
+  //   this.repository.push(newCharacter);
+  //   return newCharacter;
+  // }
 
   //Eliminar un pj
   async delete(id: string) {

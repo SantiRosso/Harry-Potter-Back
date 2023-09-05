@@ -9,15 +9,15 @@ import {
 } from '@nestjs/common';
 import { CharactersService } from './Character.service';
 import { Character } from './entities/Character.entity';
-import { createCharacterDto } from './dtos/create-caracters.dto';
+import { CreateCharacterDto } from './dtos/create-caracters.dto';
 
 @Controller('api/characters')
 export class CharactersController {
   constructor(private characterService: CharactersService) {}
 
   @Get()
-  async findAll(@Query('house') house: string): Promise<Character[]> {
-    const characters: Character[] = house
+  async findAll(@Query('house') house: string) {
+    const characters = house
       ? await this.characterService.findByHouse(house)
       : await this.characterService.findAll();
     return characters;
@@ -30,9 +30,8 @@ export class CharactersController {
   }
 
   @Post()
-  async create(@Body() createDto: createCharacterDto) {
-    await this.characterService.create(createDto);
-    return 'Character created succesfully!';
+  async create(@Body() createDto: CreateCharacterDto) {
+    return await this.characterService.create(createDto);
   }
 
   @Delete(':id')

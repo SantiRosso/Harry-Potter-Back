@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsNumber, IsBoolean } from 'class-validator';
 
-export class createCharacterDto {
+export class CreateCharacterDto {
   @IsNotEmpty()
   @IsString()
   name: string;
