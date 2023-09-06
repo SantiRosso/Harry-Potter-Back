@@ -2,6 +2,7 @@ import { Creature } from '../entities/Creature.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { CreateCreatureDto } from '../dtos/create-creature.dto';
 
 @Injectable()
 export class CreatureService {
@@ -39,5 +40,20 @@ export class CreatureService {
     }
 
     return creatureFound;
+  }
+
+  async create(createCreatureDto: CreateCreatureDto) {
+    // const arrFound = await this.characterRepository.find({
+    //   where: {
+    //     document: createArrendatarioDto.document,
+    //   },
+    // });
+
+    // if (arrFound.length) {
+    //   return new HttpException('Document already exists', HttpStatus.CONFLICT);
+    // }
+
+    const newCreature = this.creatureRepository.create(createCreatureDto);
+    return await this.creatureRepository.save(newCreature);
   }
 }

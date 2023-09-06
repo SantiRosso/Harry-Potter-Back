@@ -2,15 +2,16 @@ import {
   Controller,
   Get,
   Param,
-  // Post,
-  // Body,
+  Post,
+  Body,
   // Delete,
   Query,
   // Patch,
 } from '@nestjs/common';
 import { CreatureService } from './Creature.service';
+import { CreateCreatureDto } from '../dtos/create-creature.dto';
 
-@Controller('creatures')
+@Controller('api/creatures')
 export class CreatureController {
   constructor(private creatureService: CreatureService) {}
 
@@ -25,5 +26,10 @@ export class CreatureController {
   @Get(':id')
   async findById(@Param('id') id: string) {
     return await this.creatureService.findById(id);
+  }
+
+  @Post()
+  async create(@Body() createDto: CreateCreatureDto) {
+    return await this.creatureService.create(createDto);
   }
 }

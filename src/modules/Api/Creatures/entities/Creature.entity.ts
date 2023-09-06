@@ -12,7 +12,7 @@ export class Creature {
   type: string;
 
   @Column()
-  description: number;
+  description: string;
 
   @Column()
   alive: boolean;
