@@ -6,9 +6,11 @@ import {
   Body,
   Delete,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { CharactersService } from './Character.service';
-import { CreateCharacterDto } from './dtos/create-caracters.dto';
+import { CreateCharacterDto } from './dtos/create-characters.dto';
+import { UpdateCharacterDto } from './dtos/update-characters.dto';
 
 @Controller('api/characters')
 export class CharactersController {
@@ -33,8 +35,16 @@ export class CharactersController {
     return await this.characterService.create(createDto);
   }
 
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateFields: UpdateCharacterDto,
+  ) {
+    return await this.characterService.update(id, updateFields);
+  }
+
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    await this.characterService.delete(id);
+    return await this.characterService.delete(id);
   }
 }
