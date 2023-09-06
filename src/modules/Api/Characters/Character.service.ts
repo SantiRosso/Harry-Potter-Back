@@ -7,8 +7,6 @@ import { UpdateCharacterDto } from './dtos/update-characters.dto';
 
 @Injectable()
 export class CharactersService {
-  repository: Character[];
-
   constructor(
     @InjectRepository(Character)
     private characterRepository: Repository<Character>,
