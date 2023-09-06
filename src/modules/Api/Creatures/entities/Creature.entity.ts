@@ -9,7 +9,7 @@ export class Creature {
   name: string;
 
   @Column()
-  Type: string;
+  type: string;
 
   @Column()
   description: number;
