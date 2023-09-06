@@ -26,7 +26,7 @@ export class CharactersService {
     });
 
     if (!characterFound) {
-      return new HttpException('Arrendatario not found', HttpStatus.NOT_FOUND);
+      return new HttpException('Character not found', HttpStatus.NOT_FOUND);
     }
 
     return characterFound;
@@ -71,7 +71,7 @@ export class CharactersService {
     );
 
     if (result.affected === 0) {
-      return new HttpException('Charapter not found', HttpStatus.NOT_FOUND);
+      return new HttpException('Character not found', HttpStatus.NOT_FOUND);
     }
 
     return result;

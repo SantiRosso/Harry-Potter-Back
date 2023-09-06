@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCreatureDto } from '../dtos/create-creature.dto';
+import { UpdateCreatureDto } from '../dtos/update-creature.dto';
 
 @Injectable()
 export class CreatureService {
@@ -21,8 +22,8 @@ export class CreatureService {
         id,
       },
     });
-    if (!creatureFound) {
-      return new HttpException('Arrendatario not found', HttpStatus.NOT_FOUND);
+    if (!creatureFound.length || creatureFound instanceof HttpException) {
+      return new HttpException('Creature not found', HttpStatus.NOT_FOUND);
     }
 
     return creatureFound;
@@ -36,7 +37,7 @@ export class CreatureService {
     });
 
     if (!creatureFound.length || creatureFound instanceof HttpException) {
-      return new HttpException('Character not found', HttpStatus.NOT_FOUND);
+      return new HttpException('Creature not found', HttpStatus.NOT_FOUND);
     }
 
     return creatureFound;
@@ -55,5 +56,28 @@ export class CreatureService {
 
     const newCreature = this.creatureRepository.create(createCreatureDto);
     return await this.creatureRepository.save(newCreature);
+  }
+
+  async update(id: string, updateChreatureFields: UpdateCreatureDto) {
+    const result = await this.creatureRepository.update(
+      { id },
+      updateChreatureFields,
+    );
+
+    if (result.affected === 0) {
+      return new HttpException('Creature not found', HttpStatus.NOT_FOUND);
+    }
+
+    return result;
+  }
+
+  async delete(id: string) {
+    const result = await this.creatureRepository.delete({ id });
+
+    if (result.affected === 0) {
+      return new HttpException('Creature not found', HttpStatus.NOT_FOUND);
+    }
+
+    return result;
   }
 }
