@@ -12,4 +12,9 @@ export class TextbookController {
       : await this.textbookService.findAll();
     return textbooks;
   }
+
+  @Get(':id')
+  async findById(@Query('id') id: string) {
+    return await this.textbookService.findById(id);
+  }
 }
