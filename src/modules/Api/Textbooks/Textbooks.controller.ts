@@ -1,5 +1,6 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, Body, Param, Patch } from '@nestjs/common';
 import { TextbookService } from './Textbooks.service';
+import { UpdateTextbookDto } from './dtos/update-textbook.dto';
 
 @Controller('api/textbooks')
 export class TextbookController {
@@ -14,7 +15,15 @@ export class TextbookController {
   }
 
   @Get(':id')
-  async findById(@Query('id') id: string) {
+  async findById(@Param('id') id: string) {
     return await this.textbookService.findById(id);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateFields: UpdateTextbookDto,
+  ) {
+    return await this.textbookService.update(id, updateFields);
   }
 }

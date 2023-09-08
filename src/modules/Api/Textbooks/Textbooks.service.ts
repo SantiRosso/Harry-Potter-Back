@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Textbook } from './entities/Textbooks.entity';
 import { Repository } from 'typeorm';
+import { UpdateTextbookDto } from './dtos/update-textbook.dto';
 
 @Injectable()
 export class TextbookService {
@@ -46,5 +47,28 @@ export class TextbookService {
     }
 
     return textbookFound;
+  }
+
+  async update(id: string, updateTextbookFields: UpdateTextbookDto) {
+    const result = await this.textbookRepository.update(
+      { id },
+      updateTextbookFields,
+    );
+
+    if (result.affected === 0) {
+      return new HttpException('Textbook not found', HttpStatus.NOT_FOUND);
+    }
+
+    return result;
+  }
+
+  async delete(id: string) {
+    const result = await this.textbookRepository.delete({ id });
+
+    if (result.affected === 0) {
+      return new HttpException('Textbook not found', HttpStatus.NOT_FOUND);
+    }
+
+    return result;
   }
 }

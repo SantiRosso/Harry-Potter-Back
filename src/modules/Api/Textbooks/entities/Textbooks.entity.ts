@@ -12,5 +12,5 @@ export class Textbook {
   author: string;
 
   @Column()
-  description: number;
+  description: string;
 }
