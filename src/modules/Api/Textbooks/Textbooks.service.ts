@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Textbook } from './entities/Textbooks.entity';
 import { Repository } from 'typeorm';
 import { UpdateTextbookDto } from './dtos/update-textbook.dto';
+import { CreateTextbookDto } from './dtos/create-textbook.dto';
 
 @Injectable()
 export class TextbookService {
@@ -47,6 +48,20 @@ export class TextbookService {
     }
 
     return textbookFound;
+  }
+
+  async create(createTextbookFields: CreateTextbookDto) {
+    // const arrFound = await this.characterRepository.find({
+    //   where: {
+    //     document: createArrendatarioDto.document,
+    //   },
+    // });
+
+    // if (arrFound.length) {
+    //   return new HttpException('Document already exists', HttpStatus.CONFLICT);
+    // }
+    const newTextbook = this.textbookRepository.create(createTextbookFields);
+    return await this.textbookRepository.save(newTextbook);
   }
 
   async update(id: string, updateTextbookFields: UpdateTextbookDto) {

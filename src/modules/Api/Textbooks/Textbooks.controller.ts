@@ -1,6 +1,15 @@
-import { Controller, Get, Query, Body, Param, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Body,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { TextbookService } from './Textbooks.service';
 import { UpdateTextbookDto } from './dtos/update-textbook.dto';
+import { CreateTextbookDto } from './dtos/create-textbook.dto';
 
 @Controller('api/textbooks')
 export class TextbookController {
@@ -25,5 +34,10 @@ export class TextbookController {
     @Body() updateFields: UpdateTextbookDto,
   ) {
     return await this.textbookService.update(id, updateFields);
+  }
+
+  @Post()
+  async create(@Body() createFields: CreateTextbookDto) {
+    return await this.textbookService.create(createFields);
   }
 }
