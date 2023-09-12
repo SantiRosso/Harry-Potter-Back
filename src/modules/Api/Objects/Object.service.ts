@@ -30,6 +30,14 @@ export class ObjectsService {
     return objectFound;
   }
 
+  async findById(id: string) {
+    return await this.objectRepository.find({
+      where: {
+        id,
+      },
+    });
+  }
+
   async create(createObjectDto: CreateObjectDto) {
     // const arrFound = await this.characterRepository.find({
     //   where: {
