@@ -9,4 +9,16 @@ export class ProfessorService {
     @InjectRepository(Professor)
     private professorRepository: Repository<Professor>,
   ) {}
+
+  async findAll() {
+    return await this.professorRepository.find();
+  }
+
+  async findById(id: string) {
+    return await this.professorRepository.find({
+      where: {
+        id,
+      },
+    });
+  }
 }
