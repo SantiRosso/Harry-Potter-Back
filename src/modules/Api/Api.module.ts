@@ -4,6 +4,8 @@ import { CreaturesModule } from './Creatures/creatures/Creature.module';
 import { TextbookModule } from './Textbooks/Textbooks.module';
 import { ObjectModule } from './Objects/Object.module';
 import { ProfessorModule } from './Professors/Professor.module';
+import { PlacesModule } from './Places/Places.module';
+import { SpellModule } from './Spells/Spells.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import { ProfessorModule } from './Professors/Professor.module';
     TextbookModule,
     ObjectModule,
     ProfessorModule,
+    PlacesModule,
+    SpellModule,
   ],
   providers: [],
   controllers: [],
