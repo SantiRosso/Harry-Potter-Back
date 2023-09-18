@@ -17,11 +17,17 @@ export class ProfessorService {
   }
 
   async findById(id: string) {
-    return await this.professorRepository.find({
+    const professorFound = await this.professorRepository.find({
       where: {
         id,
       },
     });
+
+    if (!professorFound) {
+      return new HttpException('Professor not found', HttpStatus.NOT_FOUND);
+    }
+
+    return professorFound;
   }
 
   async create(createFields: CreateProfessorDto) {
@@ -34,7 +40,7 @@ export class ProfessorService {
     // if (arrFound.length) {
     //   return new HttpException('Document already exists', HttpStatus.CONFLICT);
     // }
-    const newProfessor = await this.professorRepository.create(createFields);
+    const newProfessor = this.professorRepository.create(createFields);
     return await this.professorRepository.save(newProfessor);
   }
 
