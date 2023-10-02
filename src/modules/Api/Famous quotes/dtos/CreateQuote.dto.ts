@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 
-export class CreateCreatureDto {
+export class CreateQuoteDto {
   @IsNotEmpty()
   @IsString()
   quote: string;
